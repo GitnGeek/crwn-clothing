@@ -2,7 +2,11 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
 
-const config = {
+import { initializeApp } from 'firebase/app';
+import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+
+const firebaseConfig = {
   apiKey: 'AIzaSyDo7jZPqmECqxB4Df_us2luAOr8PbWH3PM',
   authDomain: 'crwn-db-57be1.firebaseapp.com',
   projectId: 'crwn-db-57be1',
@@ -12,13 +16,13 @@ const config = {
   measurementId: 'G-JKWVQKTFDH',
 };
 
-firebase.initializeApp(config);
+const app = initializeApp(firebaseConfig);
 
-export const auth = firebase.auth();
-export const firestore = firebase.firestore();
+export const auth = getAuth(app);
+export const firestore = getFirestore(app);
 
-const provider = new firebase.auth.GoogleAuthProvider();
+const provider = new GoogleAuthProvider();
 provider.setCustomParameters({ prompt: 'select_account' });
-export const signInWithGoogle = () => auth.signInWithPopup(provider);
+export const signInWithGoogle = () => signInWithPopup(auth, provider);
 
 export default firebase;
